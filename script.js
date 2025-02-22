@@ -57,8 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
         totalDiasTrabalhadosSpan.textContent = totalDiasTrabalhados;
     }
 
-    // ... (outras funções) ...
-
     function carregarDadosDaPlanilha() {
         fetch(SHEET_URL)
             .then(response => response.text())
@@ -84,12 +82,54 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 });
-                atualizarCalendario(); // Chamada após processar os dados
+                atualizarCalendario();
                 atualizarTabelaAtendimentos();
                 atualizarComissaoEComplementacao();
                 mostrarRegistrosDeDias();
             });
     }
 
-    carregarDadosDaPlanilha(); // Carrega os dados da planilha ao carregar a página
+    carregarDadosDaPlanilha();
+
+    timeConfirmButton.addEventListener('click', function () {
+        const timeValue = timeInput.value;
+        if (timeValue) {
+            selectedTime = timeValue;
+            diasTrabalhados[selectedDay] = selectedTime; // Atualiza diasTrabalhados
+            atualizarCalendario(); // Atualiza o calendário
+
+            mostrarRegistrosDeDias();
+
+            timePopup.classList.remove('show');
+
+            const dayButton = document.querySelector(`#calendario button[data-dia="${selectedDay}"]`);
+            if (dayButton) {
+                dayButton.classList.add('trabalhado');
+                if (timeValue < '08:51') {
+                    dayButton.classList.add('verde');
+                } else {
+                    dayButton.classList.add('vermelho');
+                }
+                atualizarTotalDiasTrabalhados();
+            }
+        } else {
+            alert('Por favor, insira um horário.');
+        }
+    });
+
+    timeCancelButton.addEventListener('click', function () {
+        timePopup.classList.remove('show');
+    });
+
+    function mostrarRegistrosDeDias() {
+        let registrosHTML = '';
+        for (const dia in diasTrabalhados) {
+            if (diasTrabalhados.hasOwnProperty(dia)) {
+                registrosHTML += `<p>Dia ${dia}: ${diasTrabalhados[dia]}</p>`;
+            }
+        }
+        diaHoraSelecionadoDiv.innerHTML = registrosHTML || 'Nenhum dia trabalhado registrado.';
+    }
+
+    mostrarRegistrosDeDias();
 });
