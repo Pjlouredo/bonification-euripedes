@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let diasTrabalhados = {}; 
 
   function gerarCalendario() {
-    for (let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= 30; i++) {
       const button = document.createElement('button');
       button.textContent = i;
       button.dataset.dia = i;
