@@ -1,68 +1,117 @@
-<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bonificação Eurípedes</title>
     <link rel="stylesheet" href="style.css" />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-</head>
-<body>
+    <style>
+      /* Popup Styles */
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s;
+      }
+
+      .popup.show {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .popup-inner {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+      }
+
+      .popup-inner input[type="time"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .popup-inner button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #5cb85c;
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
     <div class="container">
-        <img src="img/01.jpg" alt="Barbearia Louredo logo" class="logo">
-        <h1>Bonificação - Eurípedes</h1>
+      <h1>Bonificação - Eurípedes</h1>
 
-        <section id="calendario-pontuacao">
-            <h2>Calendário de Pontuação</h2>
-            <p>
-                Total de Dias Trabalhados: <span id="total-dias-trabalhados">0</span>
-            </p>
-            <div id="calendario">
-                </div>
-            <div>
-                <h3>Registro de Dias Trabalhados:</h3>
-                <div id="dia-hora-selecionado"></div>
-            </div>
-        </section>
+      <section id="calendario-pontuacao">
+        <h2>Calendário de Pontuação</h2>
+        <p>
+          Total de Dias Trabalhados: <span id="total-dias-trabalhados">0</span>
+        </p>
+        <div id="calendario">
+          <!-- Calendar days will be generated here -->
+        </div>
+        <div>
+          <h3>Registro de Dias Trabalhados:</h3>
+          <div id="dia-hora-selecionado"></div>
+        </div>
+      </section>
 
-        <section id="registro-atendimentos">
-            <h2>Registro de Atendimentos</h2>
-            <table id="tabela-atendimentos">
-                <thead>
-                    <tr>
-                        <th>Dia</th>
-                        <th>Valor</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="atendimentos-corpo">
-                    </tbody>
-            </table>
-            <p>Comissão (40%): <span id="comissao">R$ 0.00</span></p>
-        </section>
+      <section id="registro-atendimentos">
+        <h2>Registro de Atendimentos</h2>
+        <table id="tabela-atendimentos">
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>Valor</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="atendimentos-corpo">
+            <!-- Table rows will be added dynamically -->
+          </tbody>
+        </table>
+        <p>Comissão (40%): <span id="comissao">R$ 0.00</span></p>
+      </section>
 
-        <section id="calculo-complementacao">
-            <h2>Cálculo da Complementação</h2>
-            <p>Comissão: <span id="comissao-valor">R$ 0.00</span></p>
-            <p>Complementação: <span id="complementacao-valor">R$ 0.00</span></p>
-        </section>
+      <section id="calculo-complementacao">
+        <h2>Cálculo da Complementação</h2>
+        <p>Comissão: <span id="comissao-valor">R$ 0.00</span></p>
+        <p>Complementação: <span id="complementacao-valor">R$ 0.00</span></p>
+      </section>
     </div>
 
+    <!-- The Popup -->
     <div id="time-popup" class="popup">
-        <div class="popup-inner">
-            <h3>Inserir Horário</h3>
-            <input type="time" id="time-input" />
-            <button id="time-confirm">Confirmar</button>
-            <button id="time-cancel">Cancelar</button>
-        </div>
+      <div class="popup-inner">
+        <h3>Inserir Horário</h3>
+        <input type="time" id="time-input" />
+        <button id="time-confirm">Confirmar</button>
+        <button id="time-cancel">Cancelar</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
