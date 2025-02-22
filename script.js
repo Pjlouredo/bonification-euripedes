@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const timeConfirmButton = document.getElementById('time-confirm');
     const timeCancelButton = document.getElementById('time-cancel');
 
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-yFhZgDW07QK8_YAWT_gYwHxEIFICXaWK3tz_px0KbakEND-9CxWrpViT6GePNCYuzQ79H1Uc46jD/pub?output=csv'; // Substitua pelo seu link
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-yFhZgDW07QK8_YAWT_gYwHxEIFICXaWK3tz_px0KbakEND-9CxWrpViT6GePNCYuzQ79H1Uc46jD/pub?output=csv';
 
     let totalDiasTrabalhados = 0;
     let atendimentos = [];
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let diasTrabalhados = {};
 
     function gerarCalendario() {
-        for (let i = 1; i <= 40; i++) {
+        for (let i = 1; i <= 31; i++) {
             const button = document.createElement('button');
             button.textContent = i;
             button.dataset.dia = i;
@@ -39,61 +39,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!diasTrabalhados[selectedDay]) {
                     timePopup.classList.add('show');
                 } else {
-                    diaHoraSelecionadoDiv.textContent = `Dia ${selectedDay}, Horário: <span class="math-inline">\{diasTrabalhados\[selectedDay\]\}\`;
-\}
-\}\);
-calendarioDiv\.appendChild\(button\);
-\}
-\}
-function atualizarCalendario\(\) \{
-calendarioDiv\.innerHTML \= '';
-gerarCalendario\(\);
-\}
-function atualizarTotalDiasTrabalhados\(\) \{
-totalDiasTrabalhados \= document\.querySelectorAll\('\#calendario button\.trabalhado'\)\.length;
-totalDiasTrabalhadosSpan\.textContent \= totalDiasTrabalhados;
-\}
-function adicionarAtendimento\(\) \{
-const dia \= prompt\('Dia do Atendimento\:'\);
-const valor \= parseFloat\(prompt\('Valor do Atendimento\:'\)\);
-if \(dia && \!isNaN\(valor\)\) \{
-atendimentos\.push\(\{
-dia\: dia,
-valor\: valor
-\}\);
-atualizarTabelaAtendimentos\(\);
-atualizarComissaoEComplementacao\(\);
-\} else \{
-alert\('Por favor, insira um dia e valor válidos\.'\);
-\}
-\}
-function atualizarTabelaAtendimentos\(\) \{
-atendimentosCorpo\.innerHTML \= '';
-atendimentos\.forEach\(\(atendimento, index\) \=\> \{
-const row \= document\.createElement\('tr'\);
-const diaCell \= document\.createElement\('td'\);
-const valorCell \= document\.createElement\('td'\);
-const editCell \= document\.createElement\('td'\);
-const editButton \= document\.createElement\('button'\);
-diaCell\.textContent \= atendimento\.dia;
-valorCell\.textContent \= 'R</span> ' + atendimento.valor.toFixed(2);
+                    diaHoraSelecionadoDiv.textContent = `Dia ${selectedDay}, Horário: ${diasTrabalhados[selectedDay]}`;
+                }
+            });
 
-            editButton.textContent = 'Editar';
-            editButton.addEventListener('click', () => editarAtendimento(index));
-
-            editCell.appendChild(editButton);
-            row.appendChild(diaCell);
-            row.appendChild(valorCell);
-            row.appendChild(editCell);
-            atendimentosCorpo.appendChild(row);
-        });
+            calendarioDiv.appendChild(button);
+        }
     }
 
-    function editarAtendimento(index) {
-        const password = prompt('Por favor, insira a senha para editar:');
-        if (password === '0110kn@m') {
-            const novoDia = prompt('Novo Dia do Atendimento:', atendimentos[index].dia);
-            const novoValor = parseFloat(prompt('Novo Valor do Atendimento:', atendimentos[index].valor));
+    function atualizarCalendario() {
+        calendarioDiv.innerHTML = '';
+        gerarCalendario();
+    }
 
-            if (novoDia && !isNaN(novoValor)) {
-                atendimentos[index] = {
+    function atualizarTotalDiasTrabalhados() {
+        totalDiasTrabalhados = document.querySelectorAll('#calendario button.trabalhado').length;
+        totalDiasTrabalhadosSpan.textContent = totalDiasTrabalhados;
+    }
+
+    // ... (outras funções) ...
+
+    gerarCalendario(); // Chamada da função para gerar o calendário
+});
