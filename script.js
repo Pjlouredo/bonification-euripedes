@@ -59,5 +59,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ... (outras funções) ...
 
-    gerarCalendario(); // Chamada da função para gerar o calendário
+    function carregarDadosDaPlanilha() {
+        fetch(SHEET_URL)
+            .then(response => response.text())
+            .then(csv => {
+                const linhas = csv.split('\n');
+                linhas.forEach(linha => {
+                    const colunas = linha.split(',');
+                    if (colunas.length === 4) {
+                        const data = colunas[0];
+                        const horario = colunas[1];
+                        const atendimentoDia = colunas[2];
+                        const atendimentoValor = parseFloat(colunas[3]);
+
+                        if (data && horario) {
+                            diasTrabalhados[data] = horario;
+                        }
+
+                        if (atendimentoDia && !isNaN(atendimentoValor)) {
+                            atendimentos.push({
+                                dia: atendimentoDia,
+                                valor: atendimentoValor
+                            });
+                        }
+                    }
+                });
+                atualizarCalendario(); // Chamada após processar os dados
+                atualizarTabelaAtendimentos();
+                atualizarComissaoEComplementacao();
+                mostrarRegistrosDeDias();
+            });
+    }
+
+    carregarDadosDaPlanilha(); // Carrega os dados da planilha ao carregar a página
 });
